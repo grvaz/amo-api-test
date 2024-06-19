@@ -10,13 +10,13 @@ class WebhookController extends Controller
     public function __invoke(Request $request)
     {
         foreach ($request->all() as $entity => $actions) {
-            if (in_array($entity, ['leads', 'contacts'])) {
-                foreach ($actions as $action => $data) {
-                    foreach ($data as $entityData) {
-                        $this->$action($entity, $entityData);
-                    }
+            if (!in_array($entity, ['leads', 'contacts']))
+                continue;
+            foreach ($actions as $action => $data) {
+                foreach ($data as $entityData) {
+                    $this->$action($entity, $entityData);
                 }
-            }
+            }            
         }
     }
 
